@@ -5,22 +5,28 @@
 A lightweight and modern web interface for **Flowable REST APIs (v7.x)**.  
 Built with **React + Vite**, this client allows you to explore process definitions, start new process instances, manage user tasks, and monitor runtime state — directly from a clean web UI.
 
+---
+
 ## ✨ Features
-- View **process definitions** and their versions
-- Start **process instances** with variables
-- Inspect **active instances**, variables and incidents
-- Manage **user tasks** (claim, complete, open details)
-- **Pagination** and filters for tasks and instances
+- View **process definitions** and their versions  
+- Start **process instances** with variables  
+- Inspect **active instances**, variables and incidents  
+- Manage **user tasks** (claim, complete, open details)  
+- **Pagination** and filters for tasks and instances  
 - Layout inspired by **Flowable Work UI**
+
+---
 
 ## 🔗 Compatibility
 | Component | Version |
-|----------|---------|
+|------------|----------|
 | Flowable Engine | 7.x |
 | Flowable REST base | `/flowable-rest/service` |
 | Node.js | ≥ 18 |
 | NPM | ≥ 9 |
 | TypeScript | ≥ 5 |
+
+---
 
 ## 🚀 Quick start
 
@@ -32,33 +38,51 @@ npm install
 cp .env.example .env
 # then edit VITE_API_BASE to point to your Flowable REST (e.g. http://localhost:8080/flowable-rest/service)
 
-# (optional) You can also configure a development proxy in vite.config.ts if needed to simplify local development.
-
 # Start dev
 npm run dev
-```
+````
 
-Open http://localhost:5173
+Open [http://localhost:5173](http://localhost:5173)
 
-## 🧰 Proxy (optional, for dev)
+> 🧩 **Note:** By default, the app works *without any proxy*.
+> If your Flowable REST API runs on the same origin or already supports CORS, you don’t need to modify anything.
 
-**Why/when**: use this only during local development when the Flowable REST API is on a different origin (to avoid CORS). In production, configure CORS at the server or use a reverse proxy.
+---
 
-You can enable a dev proxy in `vite.config.ts` to avoid CORS during development. Example snippet:
+## 🧰 Optional dev proxy (for CORS issues)
+
+If you get CORS errors during development because your Flowable REST API runs on a **different origin**
+(e.g. backend on port 8080 and UI on 5173), you can enable the commented proxy block in `vite.config.ts`.
+
+Example file (included by default):
 
 ```ts
-server: {
-  proxy: {
-    '/flowable-rest': {
-      target: 'http://localhost:8080',
-      changeOrigin: true,
-      secure: false,
-    },
+// vite.config.ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    /*
+     * Optional: Flowable REST dev proxy
+     * Uncomment this block only if you get CORS issues
+     * when connecting to a Flowable REST API running on a different origin.
+     */
+    // proxy: {
+    //   '/flowable-rest': {
+    //     target: 'http://localhost:8080',
+    //     changeOrigin: true,
+    //     secure: false,
+    //   },
+    // },
   },
-}
+})
 ```
 
-> **Note:** Do not commit company-specific hosts or tokens. Keep the proxy generic and document your environment in the README instead.
+> 💡 Just uncomment the `proxy` section and restart `npm run dev` to bypass CORS locally.
+
+---
 
 ## 🐳 Docker
 
@@ -69,17 +93,25 @@ docker build -t dockerlmontag/flowable-ui-client:latest .
 docker run -p 8080:80 dockerlmontag/flowable-ui-client:latest
 ```
 
-Open http://localhost:8080
+Open [http://localhost:8080](http://localhost:8080)
+
+---
 
 ## ⚠️ Security & CORS
 
-This project is a **client** for Flowable REST. CORS must be configured on your Flowable REST endpoint (server-side) or via a reverse proxy. The UI supports Basic authentication against the REST endpoint; ensure you follow your organization's guidelines when exposing endpoints.
+This project is a **client** for Flowable REST.
+CORS must be configured **on the server side** (Flowable REST) or via a **reverse proxy** in production.
+During local development, you can temporarily use the Vite dev proxy as shown above.
+
+---
 
 ## 📦 Versioning
 
 The package version is aligned to **7.0.0** to indicate compatibility with Flowable 7.x APIs.
 
+---
+
 ## 📜 License
 
-This project is licensed under the [MIT License](LICENSE).  
+This project is licensed under the [MIT License](LICENSE).
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.

@@ -3,18 +3,19 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-    plugins: [react()],
-    server: {
-        // Flowable REST dev proxy (optional): enable during local development to avoid CORS issues
-        proxy: {
-            // intercepts EVERYTHING that starts with /flowable-rest
-            '/flowable-rest': {
-                target: 'http://localhost:8080',
-                changeOrigin: true,
-                secure: false,
-                // (optional) timeout or logLevel if you need debugging
-                // logLevel: 'debug',
-            },
-        },
-    },
+  plugins: [react()],
+  server: {
+    /*
+     * Optional: Flowable REST dev proxy
+     * Uncomment this block only if you get CORS issues
+     * when connecting to a Flowable REST API running on a different origin.
+     */
+    // proxy: {
+    //   '/flowable-rest': {
+    //     target: 'http://localhost:8080',
+    //     changeOrigin: true,
+    //     secure: false,
+    //   },
+    // },
+  },
 })
