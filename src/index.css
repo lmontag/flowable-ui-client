@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html, body, #root { height: 100%; }
+
+/* Flowable-like theme tokens (easily swappable) */
+:root{
+  --brand-primary: #d62828;   /* primary red (approx) */
+  --brand-primary-600: #b71d1d;
+  --brand-bg: #f7f7f9;
+  --brand-surface: #ffffff;
+  --brand-text: #1b1b1f;
+  --brand-muted: #6b7280;
+  --brand-border: #e5e7eb;
+}
+body{ background-color: var(--brand-bg); color: var(--brand-text); }
+.btn{ @apply px-3 py-1.5 rounded-xl border; border-color: var(--brand-border); }
+.btn-primary{ background: var(--brand-primary); color: white; border-color: var(--brand-primary); }
+.btn-primary:hover{ background: var(--brand-primary-600); }
+.badge{ @apply text-xs px-2 py-0.5 border rounded-full; border-color: var(--brand-border); }
+.card{ @apply border rounded-2xl bg-white; border-color: var(--brand-border); }
