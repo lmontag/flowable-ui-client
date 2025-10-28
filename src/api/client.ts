@@ -1,4 +1,7 @@
-export const BASE_URL = (import.meta.env.VITE_FLOWABLE_BASE_URL as string) || '';
+export const BASE_URL =
+  window.__RUNTIME_CONFIG__?.API_BASE ||
+  (import.meta.env.VITE_FLOWABLE_BASE_URL as string) ||
+  'http://localhost:8080/flowable-rest/service';
 
 function getAuthCreds() {
   const user = sessionStorage.getItem('authUser') || import.meta.env.VITE_FLOWABLE_USERNAME;
