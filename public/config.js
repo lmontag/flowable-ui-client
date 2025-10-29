@@ -1,4 +1,4 @@
 // public/config.js
 window.__RUNTIME_CONFIG__ = {
-  API_BASE: "http://localhost:8080/flowable-rest/service"
+  API_BASE: "http://localhost:8080"
 };
