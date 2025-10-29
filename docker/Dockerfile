@@ -2,8 +2,15 @@
 FROM node:20-bookworm-slim AS build
 WORKDIR /app
 
+# Evita rumorini e aggiorna npm (mitiga bug di npm 10 in buildx)
+ENV NPM_CONFIG_FUND=false NPM_CONFIG_AUDIT=false
+RUN npm i -g npm@11 && npm --version
+
 COPY package*.json ./
-RUN npm ci --no-audit --no-fund --include=dev
+# Installa ANCHE le devDeps e verifica la presenza di tsc
+RUN npm ci --include=dev --no-audit --no-fund \
+ && test -x node_modules/.bin/tsc
+
 COPY . .
 RUN npm run build
 
