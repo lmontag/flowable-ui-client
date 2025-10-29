@@ -7,9 +7,7 @@ RUN npm i -g npm@11 && npm --version
 
 COPY package*.json ./
 
-RUN npm install --include=dev --prefer-offline --no-audit --no-fund \
- && test -x node_modules/.bin/tsc
-
+RUN npm install --include=dev --no-audit --no-fund
 COPY . .
 RUN npm run build
 
